@@ -1,0 +1,93 @@
+﻿<Page xmlns:my="using:DevExpress.UI.Xaml.Gauges" 
+    x:Class="MotorbikeArduino.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MotorbikeArduino"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <CollectionViewSource x:Name="PairedDevices"/>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Dark">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4*" />
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+         
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+            <Canvas>
+                <Image x:Name="image" Source="img/Ducati_red_logo.PNG" Height="50" Margin="10"/>
+            </Canvas>
+            <TextBlock x:Name="MyTitle" HorizontalAlignment="Left" Height="33" Margin="60,10,0,10" TextWrapping="Wrap" Text="Universal Windows Generic Bluetooth Serial Test App " VerticalAlignment="Top" Width="416" Foreground="#FFFB1818" FontSize="16" FontWeight="Bold"/>
+        </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+          
+
+     
+            <StackPanel Orientation="Horizontal">
+                <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
+                <ToggleSwitch IsEnabled="False" Header="Start Process" Margin="10" VerticalAlignment="Top" x:Name="StartProcess" x:Uid="tgsRecv" Toggled="StartProcess_Toggled"  />
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="buttonRefresh" Content="Refresh" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="True"/>
+                <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
+                <Button x:Name="buttonClearSendText" Content="Clear Send" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="True"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="buttonStartRecv" Content="Start Recv" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
+                <Button x:Name="buttonStopRecv" Content="Stop Recv" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
+                <Button x:Name="buttonStartProcess" Content="Start Process" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
+            </StackPanel>
+            <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource PairedDevices}}" Background="Gray" Margin="10" DoubleTapped="ConnectDevices_DoubleTapped" 
+                    Width="Auto"
+                    Height="Auto"
+                    >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="textBoxSendText" Text="Send Me" HorizontalAlignment="Left" Height="30" Margin="10" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" ToolTipService.ToolTip="" AcceptsReturn="True"/>
+                <Button x:Name="buttonSend" Content="Send" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click"  IsEnabled="False"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="BT_value" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap" Text="Value: " VerticalAlignment="Top" Width="50"/>
+                <TextBlock x:Name="txtValuefromBT" HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="800" Height="30" ToolTipService.ToolTip=""/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="RecvdText" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap" Text="Recvd: " VerticalAlignment="Top" Width="50"/>
+                <TextBlock x:Name="textBoxRecvdText" HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap"  Text="" VerticalAlignment="Top" Width="800" Height="30" ToolTipService.ToolTip=""  />
+
+            </StackPanel>
+
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+            <Canvas>
+                <Image x:Name="imageBike" Source="img/ducati_1098s_vector_by_palliepascal-d3i0vyb.png" Height="50" Canvas.Left="144" Canvas.Top="10"/>
+            </Canvas>
+        
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+            <Canvas>
+
+                
+            </Canvas>
+        </StackPanel>
+        
+
+    </Grid>
+</Page>
