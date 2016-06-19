@@ -25,6 +25,7 @@ using Windows.System.Threading;
 using Windows.Storage;
 //using RaspBlueTooth.Helpers;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -35,6 +36,13 @@ namespace MotorbikeArduino
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        double bikeAngle;
+
+        public double BikeAngle
+        {
+            get { return bikeAngle; }
+            set { bikeAngle = value; }
+        }
 
         string Title = "Bluetooth Serial Comunication UWP by LentzLive";
         private Windows.Devices.Bluetooth.Rfcomm.RfcommDeviceService _service;
@@ -147,7 +155,6 @@ namespace MotorbikeArduino
         private void ConnectDevices_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             PairedDeviceInfo pairedDevice = (PairedDeviceInfo)ConnectDevices.SelectedItem;
-      
             ConnectDevice_Click(sender, e);
         }
 
@@ -165,7 +172,7 @@ namespace MotorbikeArduino
                         await this._socket.CancelIOAsync();
                         _socket.Dispose();
                         _socket = null;
-                     
+
                         this.buttonDisconnect.IsEnabled = false;
                         this.buttonSend.IsEnabled = false;
                         this.buttonStartRecv.IsEnabled = false;
@@ -196,7 +203,7 @@ namespace MotorbikeArduino
                         InitializeRfcommDeviceService();
                         break;
                     case "Start Process":
-                        timerDataProcess = ThreadPoolTimer.CreatePeriodicTimer(dataProcessTick, TimeSpan.FromMilliseconds(Convert.ToInt32(100)));
+                        timerDataProcess = ThreadPoolTimer.CreatePeriodicTimer(dataProcessTick, TimeSpan.FromMilliseconds(Convert.ToInt32(500)));
                         break;
                 }
             }
@@ -206,20 +213,125 @@ namespace MotorbikeArduino
         {
             try
             {
-               
-               
-                await txtValuefromBT.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+
+                // await myGrapg.Dispatcher.
+                await myGrapg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
-                    txtValuefromBT.Text = FromHexString(recvdtxt);// Convert.ToString(pm10);
+                    myGrapg.Value = GetRandomNumber(-90, 90);// Convert.ToString(pm10);
+                }
+          );
+                await mySpeed.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    char[] del = { '|' };
+                    string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+
+                    mySpeed.Value = Convert.ToDouble(str[8]);// (-90, 90);// Convert.ToString(pm10);
+                }
+      );
+
+                await txtLatitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    try
+                    {
+                        char[] del = { '|' };
+                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+                        txtLatitude.Text = str[1] + " " + str[2];
+                    }
+                    catch (Exception exc)
+                    { txtLatitude.Text = "xx"; }
+
                 }
                 );
-                string newstr = recvdtxt.Substring(20, 20);
+
+                await txtLongitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    try
+                    {
+                        char[] del = { '|' };
+                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+                        txtLongitude.Text = str[3] + " " + str[4];
+                    }
+                    catch (Exception exc)
+                    { txtLongitude.Text = "xx"; }
+                }
+              );
+
+                //
+                await txtAltitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    try
+                    {
+                        char[] del = { '|' };
+                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+                        txtAltitude.Text = str[9] + " m";
+                    }
+                    catch (Exception exc)
+                    { txtAltitude.Text = "xx m"; }
+                }
+             );
+
+                //
+                await txtAccurancy.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    try
+                    {
+                        char[] del = { '|' };
+                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+                        txtAccurancy.Text = str[11];
+                    }
+                    catch (Exception exc)
+                    { txtAccurancy.Text = "xx"; }
+                }
+             );
+                //
+
+                await GpsStatus.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    try
+                    {
+                        char[] del = { '|' };
+                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+                        if (str[0].Trim() == "START")
+                            GpsStatus.Fill = new SolidColorBrush(Colors.Green);
+                        else
+                        {
+                            GpsStatus.Fill = new SolidColorBrush(Colors.Red);
+                        }
+                    }
+                    catch (Exception exc)
+                    { GpsStatus.Fill = new SolidColorBrush(Colors.Yellow); }
+
+                }
+          );
+                await txtNumberOfSat.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    try
+                    {
+                        char[] del = { '|' };
+                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+                        txtNumberOfSat.Text = str[10];
+                    }
+                    catch (Exception exc)
+                    {
+                        txtNumberOfSat.Text = "xx";
+                    }
+
+                }
+          );
+
+
+
                 recvdtxt = "";
             }
             catch (Exception e)
             { }
         }
 
+        public double GetRandomNumber(double minimum, double maximum)
+        {
+            Random random = new Random();
+            return random.NextDouble() * (maximum - minimum) + minimum;
+        }
 
         public async void Send(string msg)
         {
@@ -329,7 +441,7 @@ namespace MotorbikeArduino
                 this.buttonStartRecv.IsEnabled = false;
                 this.buttonSend.IsEnabled = false;
                 this.buttonDisconnect.IsEnabled = false;
-           
+
                 if (ex.GetType().Name == "TaskCanceledException")
                 {
                     System.Diagnostics.Debug.WriteLine("Listen: Reading task was cancelled, closing device and cleaning up");
@@ -390,8 +502,8 @@ namespace MotorbikeArduino
                     }
                     //dataReaderObject.ReadBytes();
                     System.Diagnostics.Debug.WriteLine(recvdtxt);
-                    this.textBoxRecvdText.Text = recvdtxt;// FromHexString( recvdtxt);
-                    txtValuefromBT.Text = FromHexString(this.textBoxRecvdText.Text);
+                    // this.textBoxRecvdText.Text = recvdtxt;// FromHexString( recvdtxt);
+                    // txtValuefromBT.Text = FromHexString(this.textBoxRecvdText.Text);
                     //recvdtxt = "";
                     /*if (_Mode == Mode.JustConnected)
                     {
@@ -417,7 +529,7 @@ namespace MotorbikeArduino
                     }*/
 
                     this.textBoxRecvdText.Text = "";
-             
+
                 }
                 catch (Exception ex)
                 {

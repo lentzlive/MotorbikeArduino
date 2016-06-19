@@ -4,7 +4,7 @@ boolean gpsStatus[] = {false, false, false, false, false, false, false};
 unsigned long start;
 boolean grabNext = false;
 int pointerGPS = 0;
-String dataGPS[7] ;
+String dataGPS[10] ;
 
 SoftwareSerial BTSerial(10, 11); // RX | TX
 SoftwareSerial gpsSerial(12, 13); // RX, TX
@@ -66,7 +66,7 @@ void loop()
              Serial.println(dataGPS[1]);  // West
 
 */
-          String strMessage= dataGPS[6] +"|"+ dataGPS[5]+"|"+dataGPS[4]+"|"+dataGPS[3]+"|"+dataGPS[2]+"|"+dataGPS[1];
+          String strMessage= dataGPS[9] +"|"+dataGPS[8] +"|"+dataGPS[7] +"|"+dataGPS[6] +"|"+ dataGPS[5]+"|"+dataGPS[4]+"|"+dataGPS[3]+"|"+dataGPS[2]+"|"+dataGPS[1];
            Serial.println(strMessage);  // Message
              //
            BTSerial.print(strMessage);
@@ -75,7 +75,7 @@ void loop()
         }
         if(sentence == "M$GPGGA"){
           grabNext = true; 
-          pointerGPS = 6;
+          pointerGPS = 9;
         }
         sentence ="";
       }
