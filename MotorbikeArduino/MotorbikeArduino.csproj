@@ -93,6 +93,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="ino\btserialGps.ino" />
+    <None Include="ino\Gps_TinyGps.ino" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
