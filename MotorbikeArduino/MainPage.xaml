@@ -18,35 +18,22 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
 
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
             <Canvas>
-                <Image x:Name="image" Source="img/Ducati_red_logo.PNG" Height="65" Canvas.Left="78" Canvas.Top="2"/>
+                <Image x:Name="image" Source="img/Ducati_red_logo.PNG" Height="65" Canvas.Left="50" Canvas.Top="2"/>
             </Canvas>
-            <TextBlock x:Name="MyTitle" HorizontalAlignment="Left" Height="33" Margin="154,10,0,10" TextWrapping="Wrap" Text="UWP Bluetooth Test" VerticalAlignment="Top" Width="162" Foreground="#FFFB1818" FontSize="16" FontWeight="Bold"/>
+
         </StackPanel>
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
 
 
 
-            <StackPanel Orientation="Horizontal">
-                <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
-                <ToggleSwitch IsEnabled="False" Header="Start Process" Margin="10" VerticalAlignment="Top" x:Name="StartProcess" x:Uid="tgsRecv" Toggled="StartProcess_Toggled"  />
 
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="buttonRefresh" Content="Refresh" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="True"/>
-                <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
-                <Button x:Name="buttonClearSendText" Content="Clear Send" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="True"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="buttonStartRecv" Content="Start Recv" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
-                <Button x:Name="buttonStopRecv" Content="Stop Recv" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
-                <Button x:Name="buttonStartProcess" Content="Start Process" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click" IsEnabled="False"/>
-            </StackPanel>
+            <StackPanel Orientation="Horizontal"/>
             <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource PairedDevices}}" Background="Gray" Margin="10" DoubleTapped="ConnectDevices_DoubleTapped" 
                     Width="Auto"
                     Height="Auto"
@@ -58,20 +45,22 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
+            <StackPanel Orientation="Horizontal"/>
             <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="textBoxSendText" Text="Send Me" HorizontalAlignment="Left" Height="30" Margin="10" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" ToolTipService.ToolTip="" AcceptsReturn="True"/>
-                <Button x:Name="buttonSend" Content="Send" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="80" Click="button_Click"  IsEnabled="False"/>
+                <Button x:Name="buttonRefresh" Content="Refresh" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="120" Click="button_Click" IsEnabled="True"/>
 
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="BT_value" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap" Text="Value: " VerticalAlignment="Top" Width="50"/>
+                <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="120" Click="button_Click" IsEnabled="False"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
+
+            </StackPanel>
+                <StackPanel Orientation="Horizontal">
                 <TextBlock x:Name="txtValuefromBT" HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="800" Height="30" ToolTipService.ToolTip=""/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="RecvdText" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap" Text="Recvd: " VerticalAlignment="Top" Width="50"/>
-                <TextBlock x:Name="textBoxRecvdText" HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap"  Text="" VerticalAlignment="Top" Width="800" Height="30" ToolTipService.ToolTip=""  />
 
-            </StackPanel>
 
 
         </StackPanel>
@@ -87,7 +76,7 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
 
             <Canvas>
-                <controls:Gauge x:Name="myGrapg" Minimum="-90" ScaleBrush="Azure" TickBrush="#FFFFAA00" Maximum="90" Value="0"   Unit="Angle" ScaleTickBrush="Transparent"   ValueBrush="White"  UnitBrush="White"  ScaleWidth="40" CanDrag="True" Height="130" Width="130">
+                <controls:Gauge x:Name="myGrapg" Minimum="-90" ScaleBrush="Azure" TickBrush="#FFFFAA00" Maximum="90" Value="0"   Unit="Roll" ScaleTickBrush="Transparent"   ValueBrush="White"  UnitBrush="White"  ScaleWidth="40" CanDrag="True" Height="130" Width="130">
                     <controls:Gauge.NeedleBrush>
                         <LinearGradientBrush EndPoint="1,0">
                             <GradientStop Color="Black" />
@@ -112,18 +101,30 @@
                     </controls:Gauge.TrailBrush>
                 </controls:Gauge>
 
-                <TextBlock FontSize="15" x:Name="labelLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LAT: " VerticalAlignment="Top" Width="40" Canvas.Left="148" Canvas.Top="82"/>
-                <TextBlock FontSize="15" x:Name="labelLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LON: " VerticalAlignment="Top" Width="40" Canvas.Left="148" Canvas.Top="100"/>
-                <TextBlock FontSize="15" x:Name="txtLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx E" VerticalAlignment="Top" Width="120" Canvas.Left="187" Canvas.Top="100"/>
-                <TextBlock FontSize="15" x:Name="txtLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx N" VerticalAlignment="Top" Width="120" Canvas.Left="187" Canvas.Top="82"/>
-                <TextBlock FontSize="15" x:Name="labelGpsStatus" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="GPS STATUS" VerticalAlignment="Top" Width="90" Canvas.Left="148" Canvas.Top="7"/>
-                <Ellipse x:Name="GpsStatus" Fill="Red" Height="20" Width="20" Canvas.Top="8" Canvas.Left="247" />
-                <TextBlock FontSize="15" x:Name="labelGpsNumSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="NUM SAT: " VerticalAlignment="Top" Width="70" Canvas.Left="148" Canvas.Top="27"/>
-                <TextBlock FontSize="15" x:Name="txtNumberOfSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="00" VerticalAlignment="Top" Width="30" Canvas.Left="248" Canvas.Top="27"/>
-                <TextBlock FontSize="15" x:Name="labelAccurancy" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="ACCURACY: " VerticalAlignment="Top" Width="80" Canvas.Left="148" Canvas.Top="47"/>
-                <TextBlock FontSize="15" x:Name="txtAccurancy" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0.00 " VerticalAlignment="Top" Width="40" Canvas.Left="244" Canvas.Top="47"/>
-                <TextBlock FontSize="15" x:Name="labelAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="ALT: " VerticalAlignment="Top" Width="40" Canvas.Left="148" Canvas.Top="116"/>
-                <TextBlock FontSize="15" x:Name="txtAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0 m" VerticalAlignment="Top" Width="120" Canvas.Left="187" Canvas.Top="116"/>
+                <TextBlock FontSize="15" x:Name="labelLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LAT: " VerticalAlignment="Top" Width="40" Canvas.Left="316" Canvas.Top="82"/>
+                <TextBlock FontSize="15" x:Name="labelLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LON: " VerticalAlignment="Top" Width="40" Canvas.Left="316" Canvas.Top="100"/>
+                <TextBlock FontSize="15" x:Name="txtLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx E" VerticalAlignment="Top" Width="120" Canvas.Left="355" Canvas.Top="100"/>
+                <TextBlock FontSize="15" x:Name="txtLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx N" VerticalAlignment="Top" Width="120" Canvas.Left="355" Canvas.Top="82"/>
+                <TextBlock FontSize="15" x:Name="labelGpsStatus" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="GPS STATUS" VerticalAlignment="Top" Width="90" Canvas.Left="316" Canvas.Top="7"/>
+                <Ellipse x:Name="GpsStatus" Fill="Red" Height="20" Width="20" Canvas.Top="8" Canvas.Left="415" />
+                <TextBlock FontSize="15" x:Name="labelGpsNumSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="NUM SAT: " VerticalAlignment="Top" Width="70" Canvas.Left="316" Canvas.Top="27"/>
+                <TextBlock FontSize="15" x:Name="txtNumberOfSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="00" VerticalAlignment="Top" Width="30" Canvas.Left="416" Canvas.Top="27"/>
+                <TextBlock FontSize="15" x:Name="labelAccurancy" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="ACCURACY: " VerticalAlignment="Top" Width="80" Canvas.Left="316" Canvas.Top="47"/>
+                <TextBlock FontSize="15" x:Name="txtAccurancy" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0.00 " VerticalAlignment="Top" Width="40" Canvas.Left="412" Canvas.Top="47"/>
+                <TextBlock FontSize="15" x:Name="labelAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="ALT: " VerticalAlignment="Top" Width="40" Canvas.Left="316" Canvas.Top="116"/>
+                <TextBlock FontSize="15" x:Name="txtAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0 m" VerticalAlignment="Top" Width="120" Canvas.Left="355" Canvas.Top="116"/>
+                <controls:Gauge x:Name="myPitch" Minimum="-90" ScaleBrush="Azure" TickBrush="#FFFFAA00" Maximum="90" Value="0"   Unit="Pitch" ScaleTickBrush="Transparent"   ValueBrush="White"  UnitBrush="White"  ScaleWidth="40" CanDrag="True" Height="130" Width="130" Canvas.Left="148">
+                    <controls:Gauge.NeedleBrush>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="Black" />
+                            <GradientStop Color="Blue" Offset=".5" />
+                            <GradientStop Color="Black" Offset="3" />
+                        </LinearGradientBrush>
+                    </controls:Gauge.NeedleBrush>
+                    <controls:Gauge.TrailBrush>
+                        <SolidColorBrush Color="IndianRed" Opacity="25" />
+                    </controls:Gauge.TrailBrush>
+                </controls:Gauge>
             </Canvas>
         </StackPanel>
 

@@ -58,7 +58,7 @@ namespace MotorbikeArduino
         public MainPage()
         {
             this.InitializeComponent();
-            MyTitle.Text = Title;
+     
             InitializeRfcommDeviceService();
 
         }
@@ -132,10 +132,6 @@ namespace MotorbikeArduino
                 if (success)
                 {
                     this.buttonDisconnect.IsEnabled = true;
-                    this.buttonSend.IsEnabled = true;
-                    this.buttonStartRecv.IsEnabled = true;
-                    this.buttonStartProcess.IsEnabled = true;
-                    this.buttonStopRecv.IsEnabled = false;
                     this.StartStopReceive.IsEnabled = true;
 
                     string msg = String.Format("Connected to {0}!", _socket.Information.RemoteAddress.DisplayName);
@@ -174,29 +170,23 @@ namespace MotorbikeArduino
                         _socket = null;
 
                         this.buttonDisconnect.IsEnabled = false;
-                        this.buttonSend.IsEnabled = false;
-                        this.buttonStartRecv.IsEnabled = false;
-                        this.buttonStopRecv.IsEnabled = false;
                         this.StartStopReceive.IsEnabled = false;
 
                         break;
                     case "Send":
                         //await _socket.OutputStream.WriteAsync(OutBuff);
-                        Send(this.textBoxSendText.Text);
-                        this.textBoxSendText.Text = "";
+                     
                         break;
                     case "Clear Send":
-                        this.textBoxRecvdText.Text = "";
+                     
                         recvdtxt = "";
                         break;
                     case "Start Recv":
-                        this.buttonStartRecv.IsEnabled = false;
-                        this.buttonStopRecv.IsEnabled = true;
+                     
                         Listen();
                         break;
                     case "Stop Recv":
-                        this.buttonStartRecv.IsEnabled = false;
-                        this.buttonStopRecv.IsEnabled = false;
+                       
                         CancelReadTask();
                         break;
                     case "Refresh":
@@ -213,13 +203,28 @@ namespace MotorbikeArduino
         {
             try
             {
-
                 // await myGrapg.Dispatcher.
                 await myGrapg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
-                    myGrapg.Value = GetRandomNumber(-90, 90);// Convert.ToString(pm10);
+                    char[] del = { '|' };
+                    string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+
+                    myGrapg.Value = Convert.ToDouble(str[12]);// (-90, 90);// Convert.ToString(pm10);
+
+                    //myGrapg.Value = GetRandomNumber(-90, 90);// Convert.ToString(pm10);
                 }
           );
+                await myPitch.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    char[] del = { '|' };
+                    string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
+
+                    myPitch.Value = Convert.ToDouble(str[13]);// (-90, 90);// Convert.ToString(pm10);
+
+                    //myGrapg.Value = GetRandomNumber(-90, 90);// Convert.ToString(pm10);
+                }
+ );
+
                 await mySpeed.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     char[] del = { '|' };
@@ -422,7 +427,7 @@ namespace MotorbikeArduino
                 if (_socket.InputStream != null)
                 {
                     dataReaderObject = new DataReader(_socket.InputStream);
-                    this.buttonStopRecv.IsEnabled = true;
+                 
                     this.buttonDisconnect.IsEnabled = false;
                     // keep reading the serial input
                     while (true)
@@ -437,9 +442,7 @@ namespace MotorbikeArduino
             }
             catch (Exception ex)
             {
-                this.buttonStopRecv.IsEnabled = false;
-                this.buttonStartRecv.IsEnabled = false;
-                this.buttonSend.IsEnabled = false;
+            
                 this.buttonDisconnect.IsEnabled = false;
 
                 if (ex.GetType().Name == "TaskCanceledException")
@@ -528,7 +531,7 @@ namespace MotorbikeArduino
                         status.Text = "bytes read successfully!";
                     }*/
 
-                    this.textBoxRecvdText.Text = "";
+                 
 
                 }
                 catch (Exception ex)
@@ -592,6 +595,8 @@ namespace MotorbikeArduino
                 if (toggleSwitch.IsOn == true)
                 {
                     Listen();
+                    recvdtxt = "";
+                    timerDataProcess = ThreadPoolTimer.CreatePeriodicTimer(dataProcessTick, TimeSpan.FromMilliseconds(Convert.ToInt32(350)));
                 }
                 else
                 {
