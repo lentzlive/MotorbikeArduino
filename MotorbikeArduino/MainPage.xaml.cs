@@ -58,7 +58,7 @@ namespace MotorbikeArduino
         public MainPage()
         {
             this.InitializeComponent();
-     
+
             InitializeRfcommDeviceService();
 
         }
@@ -175,18 +175,18 @@ namespace MotorbikeArduino
                         break;
                     case "Send":
                         //await _socket.OutputStream.WriteAsync(OutBuff);
-                     
+
                         break;
                     case "Clear Send":
-                     
+
                         recvdtxt = "";
                         break;
                     case "Start Recv":
-                     
+
                         Listen();
                         break;
                     case "Stop Recv":
-                       
+
                         CancelReadTask();
                         break;
                     case "Refresh":
@@ -203,133 +203,148 @@ namespace MotorbikeArduino
         {
             try
             {
-                // await myGrapg.Dispatcher.
-                await myGrapg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                string messageFromArduino = FromHexString(recvdtxt);
+                if (messageFromArduino.Length > 0 && messageFromArduino.Contains("$START") && messageFromArduino.Contains("$END"))
                 {
+
+
                     char[] del = { '|' };
-                    string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-
-                    myGrapg.Value = Convert.ToDouble(str[12]);// (-90, 90);// Convert.ToString(pm10);
-
-                    //myGrapg.Value = GetRandomNumber(-90, 90);// Convert.ToString(pm10);
-                }
-          );
-                await myPitch.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    char[] del = { '|' };
-                    string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-
-                    myPitch.Value = Convert.ToDouble(str[13]);// (-90, 90);// Convert.ToString(pm10);
-
-                    //myGrapg.Value = GetRandomNumber(-90, 90);// Convert.ToString(pm10);
-                }
- );
-
-                await mySpeed.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    char[] del = { '|' };
-                    string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-
-                    mySpeed.Value = Convert.ToDouble(str[8]);// (-90, 90);// Convert.ToString(pm10);
-                }
-      );
-
-                await txtLatitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    try
+                    string[] str = messageFromArduino.Split(del, StringSplitOptions.RemoveEmptyEntries);
+                    if (str != null && str.Count() > 0)
                     {
-                        char[] del = { '|' };
-                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-                        txtLatitude.Text = str[1] + " " + str[2];
-                    }
-                    catch (Exception exc)
-                    { txtLatitude.Text = "xx"; }
 
-                }
-                );
+                        await GpsStatus.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                if (str[0].Trim() == "$START")
+                                    GpsStatus.Fill = new SolidColorBrush(Colors.Green);
+                                else
+                                {
+                                    GpsStatus.Fill = new SolidColorBrush(Colors.Red);
+                                }
+                            }
+                            catch (Exception exc)
+                            { GpsStatus.Fill = new SolidColorBrush(Colors.Yellow); }
 
-                await txtLongitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    try
-                    {
-                        char[] del = { '|' };
-                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-                        txtLongitude.Text = str[3] + " " + str[4];
-                    }
-                    catch (Exception exc)
-                    { txtLongitude.Text = "xx"; }
-                }
+                        }
+);
+
+                        await txtLatitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                txtLatitude.Text = str[1] + " " + str[2];
+                            }
+                            catch (Exception exc)
+                            { txtLatitude.Text = "xx"; }
+
+                        }
+                    );
+
+                        await txtLongitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                txtLongitude.Text = str[3] + " " + str[4];
+                            }
+                            catch (Exception exc)
+                            { txtLongitude.Text = "xx"; }
+                        }
+                        );
+
+
+                        //
+
+                        await labelTime.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            labelTime.Text = str[7] + "/" + str[5] + "/" + str[6] + " " + str[8];
+                        }
               );
 
-                //
-                await txtAltitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    try
-                    {
-                        char[] del = { '|' };
-                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-                        txtAltitude.Text = str[9] + " m";
-                    }
-                    catch (Exception exc)
-                    { txtAltitude.Text = "xx m"; }
-                }
-             );
-
-                //
-                await txtAccurancy.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    try
-                    {
-                        char[] del = { '|' };
-                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-                        txtAccurancy.Text = str[11];
-                    }
-                    catch (Exception exc)
-                    { txtAccurancy.Text = "xx"; }
-                }
-             );
-                //
-
-                await GpsStatus.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    try
-                    {
-                        char[] del = { '|' };
-                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-                        if (str[0].Trim() == "START")
-                            GpsStatus.Fill = new SolidColorBrush(Colors.Green);
-                        else
+                        await mySpeed.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
-                            GpsStatus.Fill = new SolidColorBrush(Colors.Red);
+                            mySpeed.Value = Convert.ToDouble(str[9]);
                         }
+                  );
+                        await txtAltitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                txtAltitude.Text = str[10] + " m";
+                            }
+                            catch (Exception exc)
+                            { txtAltitude.Text = "xx m"; }
+                        }
+                         );
+
+
+
+
+
+
+                        await txtNumberOfSat.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                txtNumberOfSat.Text = str[11];
+                            }
+                            catch (Exception exc)
+                            {
+                                txtNumberOfSat.Text = "xx";
+                            }
+                        }
+                        );
                     }
-                    catch (Exception exc)
-                    { GpsStatus.Fill = new SolidColorBrush(Colors.Yellow); }
+
+                    await txtAccurancy.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            try
+                            {
+                                txtAccurancy.Text = str[12];
+                            }
+                            catch (Exception exc)
+                            { txtAccurancy.Text = "xx"; }
+                        }
+                    );
+
+                        await myGrapg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                            {                        
+                                myGrapg.Value = Convert.ToDouble(str[13]);
+                            }
+                        );
+                        await myPitch.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                            {                        
+                                myPitch.Value = Convert.ToDouble(str[14]);
+                            }
+                        );
+
+
+                    await txtXg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            txtXg.Text = str[15] + " g";
+                        }
+                    );
+
+                    await txtYg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            txtYg.Text = str[16] + " g";
+                        }
+                    );
+
+                    await txtZg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            txtZg.Text = str[17] + " g";
+                        }
+                    );
+
+                    //
 
                 }
-          );
-                await txtNumberOfSat.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    try
-                    {
-                        char[] del = { '|' };
-                        string[] str = FromHexString(recvdtxt).Split(del, StringSplitOptions.RemoveEmptyEntries);
-                        txtNumberOfSat.Text = str[10];
-                    }
-                    catch (Exception exc)
-                    {
-                        txtNumberOfSat.Text = "xx";
-                    }
-
-                }
-          );
-
-
-
                 recvdtxt = "";
             }
             catch (Exception e)
-            { }
+            { recvdtxt = ""; }
         }
 
         public double GetRandomNumber(double minimum, double maximum)
@@ -427,7 +442,7 @@ namespace MotorbikeArduino
                 if (_socket.InputStream != null)
                 {
                     dataReaderObject = new DataReader(_socket.InputStream);
-                 
+
                     this.buttonDisconnect.IsEnabled = false;
                     // keep reading the serial input
                     while (true)
@@ -442,7 +457,7 @@ namespace MotorbikeArduino
             }
             catch (Exception ex)
             {
-            
+
                 this.buttonDisconnect.IsEnabled = false;
 
                 if (ex.GetType().Name == "TaskCanceledException")
@@ -531,7 +546,7 @@ namespace MotorbikeArduino
                         status.Text = "bytes read successfully!";
                     }*/
 
-                 
+
 
                 }
                 catch (Exception ex)
@@ -596,7 +611,7 @@ namespace MotorbikeArduino
                 {
                     Listen();
                     recvdtxt = "";
-                    timerDataProcess = ThreadPoolTimer.CreatePeriodicTimer(dataProcessTick, TimeSpan.FromMilliseconds(Convert.ToInt32(350)));
+                    timerDataProcess = ThreadPoolTimer.CreatePeriodicTimer(dataProcessTick, TimeSpan.FromMilliseconds(Convert.ToInt32(250)));
                 }
                 else
                 {
