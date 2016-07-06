@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" Margin="0,10,0,278" Grid.RowSpan="2">
             <Canvas>
-                <Image x:Name="image" Source="img/Ducati_red_logo.PNG" Height="39" Canvas.Left="243" Canvas.Top="1" Width="49"/>
+                <Image x:Name="image" Source="img/Ducati_red_logo.PNG" Height="39" Canvas.Left="243" Canvas.Top="-3" Width="49"/>
             </Canvas>
 
         </StackPanel>
@@ -177,7 +177,7 @@
                 <TextBlock FontSize="12" x:Name="txtXg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="xx" VerticalAlignment="Top" Width="60" Canvas.Left="424" Canvas.Top="17"/>
                 <TextBlock FontSize="12" x:Name="txtYg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="xx" VerticalAlignment="Top" Width="60" Canvas.Left="424" Canvas.Top="33"/>
                 <TextBlock FontSize="12" x:Name="txtZg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="xx" VerticalAlignment="Top" Width="60" Canvas.Left="424" Canvas.Top="51"/>
-                <TextBlock  FontSize="20" x:Name="labelDistance" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="24 Km " VerticalAlignment="Top" Width="85" Canvas.Left="236" Canvas.Top="174"/>
+                <TextBlock  FontSize="20" x:Name="txtDistance" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="24 Km " VerticalAlignment="Top" Width="85" Canvas.Left="236" Canvas.Top="174"/>
                 <TextBlock  FontSize="20" x:Name="labelTyreTemp" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="42 °C" VerticalAlignment="Top" Width="57" Canvas.Left="76" Canvas.Top="258"/>
                 <Ellipse x:Name="TempStatus" Fill="GreenYellow" Height="20" Width="20" Canvas.Top="244" Canvas.Left="55" />
                 <TextBlock  FontSize="20" x:Name="labelShock" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="+ 1.5 cm" VerticalAlignment="Top" Width="88" Canvas.Left="210" Canvas.Top="256"/>
@@ -194,7 +194,7 @@
                                 ScaleWidth="40"
                                 CanDrag="True" 
                                 Height="100" 
-                                Width="100" Canvas.Top="112" Canvas.Left="112">
+                                Width="100" Canvas.Top="112" Canvas.Left="116">
                     <controls:Gauge.NeedleBrush>
                         <LinearGradientBrush EndPoint="1,0">
                             <GradientStop Color="Black" />
@@ -207,6 +207,7 @@
                     </controls:Gauge.TrailBrush>
                 </controls:Gauge>
                 <TextBlock  FontSize="15" x:Name="labelDistanceText" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="DISTANCE:" VerticalAlignment="Top" Width="85" Canvas.Left="236" Canvas.Top="150"/>
+                <TextBlock  FontSize="20" x:Name="txtExtTemp" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xx °C" VerticalAlignment="Top" Width="57" Canvas.Left="76" Canvas.Top="230"/>
             </Canvas>
         </StackPanel>
 

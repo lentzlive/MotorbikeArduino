@@ -204,12 +204,11 @@ namespace MotorbikeArduino
             try
             {
                 string messageFromArduino = FromHexString(recvdtxt);
-                if (messageFromArduino.Length > 0 && messageFromArduino.Contains("$START") && messageFromArduino.Contains("$END"))
+                if (messageFromArduino.Length > 0 && messageFromArduino.StartsWith("$START") && messageFromArduino.EndsWith("$END"))
                 {
-
-
                     char[] del = { '|' };
                     string[] str = messageFromArduino.Split(del, StringSplitOptions.RemoveEmptyEntries);
+
                     if (str != null && str.Count() > 0)
                     {
 
@@ -338,6 +337,21 @@ namespace MotorbikeArduino
                         }
                     );
 
+                    await txtDistance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        //double dist = Convert.ToDouble(txtDistance.Text);
+                        //dist += Convert.ToDouble(str[19]);
+                        //txtDistance.Text = dist.ToString() + " m";
+                    }
+                    );
+
+
+                    await txtExtTemp.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        txtExtTemp.Text = str[20] + " °C";
+                    }
+                    );
+                    
                     //
 
                 }
