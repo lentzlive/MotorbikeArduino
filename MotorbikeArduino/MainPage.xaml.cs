@@ -26,6 +26,9 @@ using Windows.Storage;
 //using RaspBlueTooth.Helpers;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI;
+//
+using Microsoft.Azure.Devices;
+//using Microsoft.Azure.Devices.Common.Exceptions;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -199,12 +202,49 @@ namespace MotorbikeArduino
             }
         }
 
+
+        // effettua un controllo formale ed eventualmente attende che il messaggio sia completo
+        public string CheckMessageFromBt(string msg)
+        {
+
+            try
+            {
+                
+                string[] delEndPoint =new string[] { "$END|" };
+                string[] msgArray = msg.Split(delEndPoint, StringSplitOptions.RemoveEmptyEntries);
+                int msgLenght = msgArray.Length;
+
+                if (msgLenght - 2 > 0)
+                {
+                    if (msgArray[msgLenght - 2].Contains("$START"))
+                        return msgArray[msgLenght - 2];
+                }
+               
+                else
+                {
+                    return string.Empty;
+
+                }
+
+
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            { return string.Empty; }
+
+        }
+
         private async void dataProcessTick(ThreadPoolTimer timer)
         {
             try
             {
-                string messageFromArduino = FromHexString(recvdtxt);
-                if (messageFromArduino.Length > 0 && messageFromArduino.StartsWith("$START") && messageFromArduino.EndsWith("$END"))
+
+                string msgFromBt = FromHexString(recvdtxt);
+                string messageFromArduino = CheckMessageFromBt(msgFromBt);
+                
+
+                if (messageFromArduino!=null && messageFromArduino.Length>0)//  messageFromArduino.Length > 0 && messageFromArduino.StartsWith("$START") && messageFromArduino.EndsWith("$END|"))
                 {
                     char[] del = { '|' };
                     string[] str = messageFromArduino.Split(del, StringSplitOptions.RemoveEmptyEntries);
@@ -296,16 +336,16 @@ namespace MotorbikeArduino
                         );
                     }
 
-                    await txtAccurancy.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                        {
-                            try
-                            {
-                                txtAccurancy.Text = str[12];
-                            }
-                            catch (Exception exc)
-                            { txtAccurancy.Text = "xx"; }
-                        }
-                    );
+                    //await txtAccurancy.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    //    {
+                    //        try
+                    //        {
+                    //            txtAccurancy.Text = str[12];
+                    //        }
+                    //        catch (Exception exc)
+                    //        { txtAccurancy.Text = "xx"; }
+                    //    }
+                    //);
 
                         await myGrapg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                             {                        
@@ -351,11 +391,11 @@ namespace MotorbikeArduino
                         txtExtTemp.Text = str[20] + " °C";
                     }
                     );
-                    
-                    //
 
+                    //
+                    recvdtxt = "";
                 }
-                recvdtxt = "";
+             
             }
             catch (Exception e)
             { recvdtxt = ""; }
