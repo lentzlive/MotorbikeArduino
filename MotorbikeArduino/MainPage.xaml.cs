@@ -27,7 +27,10 @@ using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI;
 //
+using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices;
+using Newtonsoft.Json;
+
 //using Microsoft.Azure.Devices.Common.Exceptions;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -57,10 +60,93 @@ namespace MotorbikeArduino
 
         string recvdtxt;
         private static ThreadPoolTimer timerDataProcess;
+        static string UniqueKeyProcess = "";
+
+        /*************************************************************
+         * 
+         *              AZURE IoT HUB - START
+         * 
+         * *************************************************************/
+
+        static string connectionStringIot = "HostName=IoTLentzLive.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xGP7mSIRxWtkwnAtzYhB0P8GNY4ybN04O+XzL6UqC1o=";
+
+        static DeviceClient deviceClient;
+        static string iotHubUri = "IoTLentzLive.azure-devices.net";
+        static string deviceKey = "9WvB4F+i7TMlRcpzYcvkmwdSiOcmWgl9cHgsP4ocOGw="; //myTelemetryDevice (creata da CreateDeviceIdentity)
+                                                                                  // static string deviceKey = "beAhLKFzamrJtw6Y7EE0oJzjemFA/rvY7i1SBGB/JBY=";
+
+        int loopAzureBeforeSend = 100;
+        int indexAzureBeforeSend = 0;
+        private static async void SendDeviceToCloudMessagesAsync(string readSensorData)
+        {
+
+            try
+            {
+
+
+                char[] del = { '|' };
+                string[] sensordata = readSensorData.Split(del, StringSplitOptions.RemoveEmptyEntries);
+
+                var telemetryDataPoint = new
+                {
+                    // deviceId = "myTelemetryDevice",
+                    deviceId = "myFirstDevice",
+                    IdProcess = UniqueKeyProcess,
+                    Latitude = sensordata[1],
+                    N = "N",
+                    Longitude = sensordata[3],
+                    E = "E",
+                    month = sensordata[5],
+                    day = sensordata[6],
+                    year = sensordata[7],
+                    hhMMss = sensordata[8],
+                    speed = sensordata[9],
+                    altitude = sensordata[10],
+                    satellites = sensordata[11],
+                    hdop = sensordata[12],
+                    roll = sensordata[13],
+                    pitch = sensordata[14],
+                    Xg = sensordata[15],
+                    Yg = sensordata[16],
+                    Zg = sensordata[17],
+                    Audio = sensordata[18],
+                    Distance = sensordata[19],
+                    TempExt = sensordata[20]
+                };
+
+                
+
+                var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
+                var message = new Message(Encoding.ASCII.GetBytes(messageString));
+
+                await deviceClient.SendEventAsync(message);
+
+                int i = 0;
+                // Task.Delay(50).Wait();
+
+            }
+            catch (Exception exc)
+            {
+
+                int i = 0;
+            }
+        }
+
+
+        /*************************************************************
+         * 
+         *              AZURE IoT HUB - END
+         * 
+         * *************************************************************/
+
+
 
         public MainPage()
         {
             this.InitializeComponent();
+            UniqueKeyProcess = DateTime.Now.ToString("yyyyMMdd");
+            //  deviceClient = DeviceClient.CreateFromConnectionString(connectionStringIot, TransportType.Http1);
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myTelemetryDevice", deviceKey), TransportType.Http1);
 
             InitializeRfcommDeviceService();
 
@@ -209,8 +295,8 @@ namespace MotorbikeArduino
 
             try
             {
-                
-                string[] delEndPoint =new string[] { "$END|" };
+
+                string[] delEndPoint = new string[] { "$END|" };
                 string[] msgArray = msg.Split(delEndPoint, StringSplitOptions.RemoveEmptyEntries);
                 int msgLenght = msgArray.Length;
 
@@ -219,7 +305,7 @@ namespace MotorbikeArduino
                     if (msgArray[msgLenght - 2].Contains("$START"))
                         return msgArray[msgLenght - 2];
                 }
-               
+
                 else
                 {
                     return string.Empty;
@@ -242,9 +328,9 @@ namespace MotorbikeArduino
 
                 string msgFromBt = FromHexString(recvdtxt);
                 string messageFromArduino = CheckMessageFromBt(msgFromBt);
-                
 
-                if (messageFromArduino!=null && messageFromArduino.Length>0)//  messageFromArduino.Length > 0 && messageFromArduino.StartsWith("$START") && messageFromArduino.EndsWith("$END|"))
+
+                if (messageFromArduino != null && messageFromArduino.Length > 0)//  messageFromArduino.Length > 0 && messageFromArduino.StartsWith("$START") && messageFromArduino.EndsWith("$END|"))
                 {
                     char[] del = { '|' };
                     string[] str = messageFromArduino.Split(del, StringSplitOptions.RemoveEmptyEntries);
@@ -252,6 +338,11 @@ namespace MotorbikeArduino
                     if (str != null && str.Count() > 0)
                     {
 
+                        if (indexAzureBeforeSend == loopAzureBeforeSend)
+                        { 
+                        SendDeviceToCloudMessagesAsync(messageFromArduino);
+                            indexAzureBeforeSend = 0;
+                        }
                         await GpsStatus.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
                             try
@@ -347,16 +438,16 @@ namespace MotorbikeArduino
                     //    }
                     //);
 
-                        await myGrapg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                            {                        
-                                myGrapg.Value = Convert.ToDouble(str[13]);
-                            }
-                        );
-                        await myPitch.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                            {                        
-                                myPitch.Value = Convert.ToDouble(str[14]);
-                            }
-                        );
+                    await myGrapg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            myGrapg.Value = Convert.ToDouble(str[13]);
+                        }
+                    );
+                    await myPitch.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            myPitch.Value = Convert.ToDouble(str[14]);
+                        }
+                    );
 
 
                     await txtXg.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -392,10 +483,11 @@ namespace MotorbikeArduino
                     }
                     );
 
+                    indexAzureBeforeSend++;
                     //
                     recvdtxt = "";
                 }
-             
+
             }
             catch (Exception e)
             { recvdtxt = ""; }
