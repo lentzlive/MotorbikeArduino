@@ -75,7 +75,7 @@ namespace MotorbikeArduino
         static string deviceKey = "9WvB4F+i7TMlRcpzYcvkmwdSiOcmWgl9cHgsP4ocOGw="; //myTelemetryDevice (creata da CreateDeviceIdentity)
                                                                                   // static string deviceKey = "beAhLKFzamrJtw6Y7EE0oJzjemFA/rvY7i1SBGB/JBY=";
 
-        int loopAzureBeforeSend = 100;
+        int loopAzureBeforeSend = 0;
         int indexAzureBeforeSend = 0;
         private static async void SendDeviceToCloudMessagesAsync(string readSensorData)
         {
@@ -89,8 +89,8 @@ namespace MotorbikeArduino
 
                 var telemetryDataPoint = new
                 {
-                    // deviceId = "myTelemetryDevice",
-                    deviceId = "myFirstDevice",
+                    deviceId = "myTelemetryDevice",
+                    //deviceId = "myFirstDevice",
                     IdProcess = UniqueKeyProcess,
                     Latitude = sensordata[1],
                     N = "N",
@@ -111,10 +111,14 @@ namespace MotorbikeArduino
                     Zg = sensordata[17],
                     Audio = sensordata[18],
                     Distance = sensordata[19],
-                    TempExt = sensordata[20]
+                    TempExt = sensordata[20],
+                    TempTyre = "",
+                    FrontAbsorber = "",
+                    BackAbsorber = "",
+                    DT_INS = DateTime.Now
                 };
 
-                
+
 
                 var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
                 var message = new Message(Encoding.ASCII.GetBytes(messageString));
@@ -144,7 +148,7 @@ namespace MotorbikeArduino
         public MainPage()
         {
             this.InitializeComponent();
-            UniqueKeyProcess = DateTime.Now.ToString("yyyyMMdd");
+            UniqueKeyProcess = DateTime.Now.ToString("yyyyMMddHHmmss");
             //  deviceClient = DeviceClient.CreateFromConnectionString(connectionStringIot, TransportType.Http1);
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myTelemetryDevice", deviceKey), TransportType.Http1);
 
@@ -338,9 +342,9 @@ namespace MotorbikeArduino
                     if (str != null && str.Count() > 0)
                     {
 
-                        if (indexAzureBeforeSend == loopAzureBeforeSend)
-                        { 
-                        SendDeviceToCloudMessagesAsync(messageFromArduino);
+                        if (indexAzureBeforeSend >= loopAzureBeforeSend)
+                        {
+                            SendDeviceToCloudMessagesAsync(messageFromArduino);
                             indexAzureBeforeSend = 0;
                         }
                         await GpsStatus.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
