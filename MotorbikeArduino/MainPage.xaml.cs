@@ -68,12 +68,18 @@ namespace MotorbikeArduino
          * 
          * *************************************************************/
 
-        static string connectionStringIot = "HostName=IoTLentzLive.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xGP7mSIRxWtkwnAtzYhB0P8GNY4ybN04O+XzL6UqC1o=";
+        //static string connectionStringIot = "HostName=IoTLentzLive.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xGP7mSIRxWtkwnAtzYhB0P8GNY4ybN04O+XzL6UqC1o=";
+        static string connectionStringIot = "HostName=MyTelemetryIoT.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=5zwFID6NGwc7cujw/KAl+UqP8BU4dyJk1qSPy5fM1Ck=";
+
 
         static DeviceClient deviceClient;
-        static string iotHubUri = "IoTLentzLive.azure-devices.net";
-        static string deviceKey = "9WvB4F+i7TMlRcpzYcvkmwdSiOcmWgl9cHgsP4ocOGw="; //myTelemetryDevice (creata da CreateDeviceIdentity)
+       // static string iotHubUri = "IoTLentzLive.azure-devices.net";
+       // static string deviceKey = "9WvB4F+i7TMlRcpzYcvkmwdSiOcmWgl9cHgsP4ocOGw="; //myTelemetryDevice (creata da CreateDeviceIdentity)
                                                                                   // static string deviceKey = "beAhLKFzamrJtw6Y7EE0oJzjemFA/rvY7i1SBGB/JBY=";
+
+        static string iotHubUri = "MyTelemetryIoT.azure-devices.net";
+        static string deviceKey = "dEDGnfWCtuktik2MpwepN5TkK+yy51RP1u1qduh8XkA=";
+        
 
         int loopAzureBeforeSend = 0;
         int indexAzureBeforeSend = 0;
@@ -89,7 +95,7 @@ namespace MotorbikeArduino
 
                 var telemetryDataPoint = new
                 {
-                    deviceId = "myTelemetryDevice",
+                    deviceId = "myDucatiMonsterDevice",
                     //deviceId = "myFirstDevice",
                     IdProcess = UniqueKeyProcess,
                     Latitude = sensordata[1],
@@ -112,9 +118,9 @@ namespace MotorbikeArduino
                     Audio = sensordata[18],
                     Distance = sensordata[19],
                     TempExt = sensordata[20],
-                    TempTyre = "",
-                    FrontAbsorber = "",
-                    BackAbsorber = "",
+                    TempTyre = sensordata[21],
+                    FrontAbsorber = sensordata[22],
+                    BackAbsorber = sensordata[23],
                     DT_INS = DateTime.Now
                 };
 
@@ -150,7 +156,7 @@ namespace MotorbikeArduino
             this.InitializeComponent();
             UniqueKeyProcess = DateTime.Now.ToString("yyyyMMddHHmmss");
             //  deviceClient = DeviceClient.CreateFromConnectionString(connectionStringIot, TransportType.Http1);
-            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myTelemetryDevice", deviceKey), TransportType.Http1);
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myDucatiMonsterDevice", deviceKey), TransportType.Http1);
 
             InitializeRfcommDeviceService();
 
@@ -795,5 +801,9 @@ namespace MotorbikeArduino
 
         }
 
+        private void btnCalibrate_Click(object sender, RoutedEventArgs e)
+        {
+            Send("1");
+        }
     }
 }
