@@ -73,13 +73,13 @@ namespace MotorbikeArduino
 
 
         static DeviceClient deviceClient;
-       // static string iotHubUri = "IoTLentzLive.azure-devices.net";
-       // static string deviceKey = "9WvB4F+i7TMlRcpzYcvkmwdSiOcmWgl9cHgsP4ocOGw="; //myTelemetryDevice (creata da CreateDeviceIdentity)
-                                                                                  // static string deviceKey = "beAhLKFzamrJtw6Y7EE0oJzjemFA/rvY7i1SBGB/JBY=";
+        // static string iotHubUri = "IoTLentzLive.azure-devices.net";
+        // static string deviceKey = "9WvB4F+i7TMlRcpzYcvkmwdSiOcmWgl9cHgsP4ocOGw="; //myTelemetryDevice (creata da CreateDeviceIdentity)
+        // static string deviceKey = "beAhLKFzamrJtw6Y7EE0oJzjemFA/rvY7i1SBGB/JBY=";
 
         static string iotHubUri = "MyTelemetryIoT.azure-devices.net";
         static string deviceKey = "dEDGnfWCtuktik2MpwepN5TkK+yy51RP1u1qduh8XkA=";
-        
+
 
         int loopAzureBeforeSend = 0;
         int indexAzureBeforeSend = 0;
@@ -368,7 +368,7 @@ namespace MotorbikeArduino
                             { GpsStatus.Fill = new SolidColorBrush(Colors.Yellow); }
 
                         }
-);
+                        );
 
                         await txtLatitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
@@ -400,13 +400,13 @@ namespace MotorbikeArduino
                         {
                             labelTime.Text = str[7] + "/" + str[5] + "/" + str[6] + " " + str[8];
                         }
-              );
+                        );
 
                         await mySpeed.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
                             mySpeed.Value = Convert.ToDouble(str[9]);
                         }
-                  );
+                    );
                         await txtAltitude.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                         {
                             try
@@ -480,18 +480,63 @@ namespace MotorbikeArduino
 
                     await txtDistance.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        //double dist = Convert.ToDouble(txtDistance.Text);
-                        //dist += Convert.ToDouble(str[19]);
-                        //txtDistance.Text = dist.ToString() + " m";
+                       
+                        try
+                        {
+                            txtDistance.Text = str[19] + " m";
+                        }
+                        catch (Exception exc)
+                        { txtDistance.Text = "-"; }
                     }
                     );
+
+                    await txtShockBack.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        try
+                        {
+                            txtShockBack.Text = str[22] + " cm";
+                        }
+                        catch (Exception exc)
+                        { txtShockBack.Text = "-"; }
+
+                    }
+                 );
+
+                    await txtShockAnt.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        try
+                        {
+                            txtShockAnt.Text = str[23] + " cm";
+                        }
+                        catch (Exception exc)
+                        { txtShockAnt.Text = "-"; }
+
+                    }
+                    );
+
 
 
                     await txtExtTemp.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        txtExtTemp.Text = str[20] + " °C";
+                        try
+                        {
+                            txtExtTemp.Text = str[20] + " °C";
+                        }
+                        catch (Exception exc)
+                        { txtExtTemp.Text = "- °C"; }
                     }
                     );
+                    await TyreTemp.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        try
+                        {
+                            TyreTemp.Text = str[21] + " °C";
+                        }
+                        catch (Exception exc)
+                        { TyreTemp.Text = "- °C"; }
+                    }
+                   );
+
 
                     indexAzureBeforeSend++;
                     //
