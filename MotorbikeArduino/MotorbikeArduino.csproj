@@ -17,6 +17,11 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>MotorbikeArduino_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxPackageDir>C:\work\uwp\Gps\MotorbikeArduino\MotorbikeArduino\AppPackages3\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -112,43 +117,28 @@
     <None Include="MotorbikeArduino_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Logo.scale-100.png" />
-    <Content Include="Assets\Logo.scale-140.png" />
-    <Content Include="Assets\Logo.scale-180.png" />
-    <Content Include="Assets\Logo.scale-240.png" />
-    <Content Include="Assets\Logo.scale-80.png" />
-    <Content Include="Assets\SmallLogo.scale-100.png" />
-    <Content Include="Assets\SmallLogo.scale-140.png" />
-    <Content Include="Assets\SmallLogo.scale-180.png" />
-    <Content Include="Assets\SmallLogo.scale-240.png" />
-    <Content Include="Assets\SmallLogo.scale-80.png" />
-    <Content Include="Assets\SplashScreen.scale-100.png" />
-    <Content Include="Assets\SplashScreen.scale-140.png" />
-    <Content Include="Assets\SplashScreen.scale-180.png" />
-    <Content Include="Assets\SplashScreen.scale-240.png" />
-    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square310x310Logo.png" />
     <Content Include="Assets\Square310x310Logo.scale-100.png" />
-    <Content Include="Assets\Square310x310Logo.scale-140.png" />
-    <Content Include="Assets\Square310x310Logo.scale-180.png" />
-    <Content Include="Assets\Square310x310Logo.scale-80.png" />
-    <Content Include="Assets\Square70x70Logo.scale-100.png" />
-    <Content Include="Assets\Square70x70Logo.scale-140.png" />
-    <Content Include="Assets\Square70x70Logo.scale-180.png" />
-    <Content Include="Assets\Square70x70Logo.scale-80.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\Square71x71Logo.png" />
     <Content Include="Assets\Square71x71Logo.scale-100.png" />
-    <Content Include="Assets\Square71x71Logo.scale-140.png" />
-    <Content Include="Assets\Square71x71Logo.scale-240.png" />
-    <Content Include="Assets\StoreLogo.scale-100.png" />
-    <Content Include="Assets\StoreLogo.scale-140.png" />
-    <Content Include="Assets\StoreLogo.scale-180.png" />
-    <Content Include="Assets\StoreLogo.scale-240.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-140.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-180.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-80.png" />
-    <Content Include="Assets\WideLogo.scale-100.png" />
-    <Content Include="Assets\WideLogo.scale-140.png" />
-    <Content Include="Assets\WideLogo.scale-240.png" />
+    <Content Include="Assets\StoreImg\150x150.png" />
+    <Content Include="Assets\StoreImg\24x24.png" />
+    <Content Include="Assets\StoreImg\300x300.png" />
+    <Content Include="Assets\StoreImg\300x300.scale-200.png" />
+    <Content Include="Assets\StoreImg\310x150.png" />
+    <Content Include="Assets\StoreImg\310x310.png" />
+    <Content Include="Assets\StoreImg\50x50.png" />
+    <Content Include="Assets\StoreImg\50x50.scale-100.png" />
+    <Content Include="Assets\StoreImg\620x300.png" />
+    <Content Include="Assets\StoreImg\71x71.png" />
+    <Content Include="Assets\StoreImg\88x88.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="img\1775.png" />
     <Content Include="img\2797b22c2af04afd8400cbe0fc962f6d_PortalHIRes.png" />
     <Content Include="img\A%28151%29.jpg" />
@@ -162,13 +152,6 @@
     <Content Include="img\scorcher_11.png" />
     <Content Include="img\shock1.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -188,6 +171,7 @@
       <Name>DevExpress.Visualization</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

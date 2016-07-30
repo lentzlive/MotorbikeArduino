@@ -30,6 +30,7 @@ using Windows.UI;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
+using Windows.System.Display;
 
 //using Microsoft.Azure.Devices.Common.Exceptions;
 
@@ -157,6 +158,10 @@ namespace MotorbikeArduino
             UniqueKeyProcess = DateTime.Now.ToString("yyyyMMddHHmmss");
             //  deviceClient = DeviceClient.CreateFromConnectionString(connectionStringIot, TransportType.Http1);
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myDucatiMonsterDevice", deviceKey), TransportType.Http1);
+
+            //keep display on
+            var displayRequest = new DisplayRequest();
+            displayRequest.RequestActive(); //to request keep display on
 
             InitializeRfcommDeviceService();
 
@@ -531,9 +536,20 @@ namespace MotorbikeArduino
                         try
                         {
                             TyreTemp.Text = str[21] + " °C";
+                            if(Convert.ToDouble(str[21])<35.0)
+                            TempStatus.Fill = new SolidColorBrush(Colors.GreenYellow); // "GreenYellow";
+                            else if (Convert.ToDouble(str[21]) >= 35.0 && Convert.ToDouble(str[21]) < 45.0)
+                                TempStatus.Fill = new SolidColorBrush(Colors.Orange); // "GreenYellow";
+                            else if (Convert.ToDouble(str[21]) >= 45.0 )
+                                TempStatus.Fill = new SolidColorBrush(Colors.Red); // "GreenYellow";
+
+
                         }
                         catch (Exception exc)
-                        { TyreTemp.Text = "- °C"; }
+                        {
+                            TyreTemp.Text = "- °C";
+                            TempStatus.Fill = new SolidColorBrush(Colors.GreenYellow);
+                        }
                     }
                    );
 

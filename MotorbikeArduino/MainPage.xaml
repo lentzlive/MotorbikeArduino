@@ -22,9 +22,7 @@
 
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" Margin="0,10,0,278" Grid.RowSpan="2">
-            <Canvas>
-                <Image x:Name="image" Source="img/Ducati_red_logo.PNG" Height="39" Canvas.Left="175" Canvas.Top="-3" Width="49"/>
-            </Canvas>
+            <Canvas/>
 
         </StackPanel>
 
@@ -36,7 +34,7 @@
             <StackPanel Orientation="Horizontal"/>
             <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource PairedDevices}}" Background="Gray" Margin="10" DoubleTapped="ConnectDevices_DoubleTapped" 
                     Width="Auto"
-                    Height="Auto"
+                    Height="Auto" FontSize="12"
                     >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -54,7 +52,7 @@
                 <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Height="30" Margin="10" VerticalAlignment="Top" Width="120" Click="button_Click" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
+                <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" FontSize="12" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
 
             </StackPanel>
             <StackPanel Orientation="Horizontal"/>
@@ -68,34 +66,34 @@
 
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
             <Canvas>
-                <Image x:Name="imageBike" Source="img/Ducati_front_shadow.png" Height="43" Canvas.Left="113" Canvas.Top="215" Width="35"/>
-                <TextBlock FontSize="15"  x:Name="labelTitle" HorizontalAlignment="Left" Height="26" TextWrapping="NoWrap" Text="MyDucati Telemetry" VerticalAlignment="Top" Width="345" Canvas.Left="98" Canvas.Top="21" FontFamily="Goudy Stout"/>
-                <Image x:Name="imageBike_Copy" Source="img/ducati_1098s_vector_by_palliepascal-d3i0vyb.png" Height="39" Canvas.Left="99" Canvas.Top="292" RenderTransformOrigin="0.5,0.5" Width="49">
+                <Image x:Name="imageBike" Source="img/Ducati_front_shadow.png" Height="43" Canvas.Left="117" Canvas.Top="215" Width="35"/>
+                <TextBlock FontSize="15"  x:Name="labelTitle" HorizontalAlignment="Left" Height="26" TextWrapping="NoWrap" Text="My MotorBike Telemetry" VerticalAlignment="Top" Width="439" Canvas.Left="4" Canvas.Top="15" FontFamily="Goudy Stout"/>
+                <Image x:Name="imageBike_Copy" Source="img/ducati_1098s_vector_by_palliepascal-d3i0vyb.png" Height="39" Canvas.Left="103" Canvas.Top="292" RenderTransformOrigin="0.5,0.5" Width="49">
                     <Image.RenderTransform>
                         <CompositeTransform ScaleX="-1"/>
                     </Image.RenderTransform>
                 </Image>
-                <Image x:Name="imageBike_Copy1" Source="img/Red_Up_Arrow_Transparent_PNG_Clip_Art_Image.png" Height="32" Canvas.Left="111.25" Canvas.Top="190.75" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Width="12.5" d:LayoutRounding="Auto">
+                <Image x:Name="imageBike_Copy1" Source="img/Red_Up_Arrow_Transparent_PNG_Clip_Art_Image.png" Height="32" Canvas.Left="115.25" Canvas.Top="190.75" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Width="12.5" d:LayoutRounding="Auto">
                     <Image.RenderTransform>
                         <CompositeTransform Rotation="-90"/>
                     </Image.RenderTransform>
                 </Image>
-                <Image x:Name="imageBike_Copy2" Source="img/Red_Up_Arrow_Transparent_PNG_Clip_Art_Image.png" Height="31.5" Canvas.Left="144" Canvas.Top="191.5" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Width="12.5" d:LayoutRounding="Auto">
+                <Image x:Name="imageBike_Copy2" Source="img/Red_Up_Arrow_Transparent_PNG_Clip_Art_Image.png" Height="31.5" Canvas.Left="148" Canvas.Top="191.5" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Width="12.5" d:LayoutRounding="Auto">
                     <Image.RenderTransform>
                         <CompositeTransform Rotation="-90" ScaleY="-1"/>
                     </Image.RenderTransform>
                 </Image>
-                <Image x:Name="imageBike_Copy3" Source="img/Red_Up_Arrow_Transparent_PNG_Clip_Art_Image.png" Height="30" Canvas.Left="145" Canvas.Top="280" RenderTransformOrigin="0.5,0.5" Width="16">
+                <Image x:Name="imageBike_Copy3" Source="img/Red_Up_Arrow_Transparent_PNG_Clip_Art_Image.png" Height="30" Canvas.Left="149" Canvas.Top="280" RenderTransformOrigin="0.5,0.5" Width="16">
                     <Image.RenderTransform>
                         <CompositeTransform Rotation="0"/>
                     </Image.RenderTransform>
                 </Image>
-                <Image x:Name="imageBike_Copy4" Source="img/scorcher_11.png" Height="75" Canvas.Top="154" RenderTransformOrigin="0.5,0.5" Width="76" Canvas.Left="288">
+                <Image x:Name="imageBike_Copy4" Source="img/scorcher_11.png" Height="75" Canvas.Top="154" RenderTransformOrigin="0.5,0.5" Width="76" Canvas.Left="266">
                     <Image.RenderTransform>
                         <CompositeTransform ScaleX="-1"/>
                     </Image.RenderTransform>
                 </Image>
-                <Image x:Name="imageBike_Copy5" Source="img/shock1.png" Height="105" Canvas.Left="268.167" Canvas.Top="233.167" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Width="112.666" d:LayoutRounding="Auto">
+                <Image x:Name="imageBike_Copy5" Source="img/shock1.png" Height="105" Canvas.Left="240.167" Canvas.Top="233.167" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Width="112.666" d:LayoutRounding="Auto">
                     <Image.RenderTransform>
                         <CompositeTransform Rotation="-90" ScaleY="-1"/>
                     </Image.RenderTransform>
@@ -117,7 +115,7 @@
                                               ScaleTickBrush="DimGray"
                                 CanDrag="True" 
                                 Height="66"
-                                Width="66" Canvas.Top="146" Canvas.Left="33"/>
+                                Width="66" Canvas.Top="146" Canvas.Left="37"/>
                 <controls:Gauge x:Name="mySpeed" Minimum="0" 
                                 ScaleBrush="Azure" 
                                 TickBrush="#FFFFAA00" 
@@ -128,7 +126,7 @@
                                 ValueBrush="White" 
                                 UnitBrush="White" 
                                 ScaleWidth="40" 
-                                CanDrag="True" Height="126" Width="175">
+                                CanDrag="True" Height="126" Width="136" Canvas.Left="16">
                     <controls:Gauge.NeedleBrush>
                         <LinearGradientBrush EndPoint="1,0">
                             <GradientStop Color="Black" />
@@ -141,18 +139,18 @@
                     </controls:Gauge.TrailBrush>
                 </controls:Gauge>
 
-                <TextBlock FontSize="15" x:Name="labelLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LAT: " VerticalAlignment="Top" Width="40" Canvas.Left="315" Canvas.Top="6"/>
-                <TextBlock FontSize="15" x:Name="labelLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LON: " VerticalAlignment="Top" Width="40" Canvas.Left="315" Canvas.Top="24"/>
-                <TextBlock FontSize="15" x:Name="txtLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx E" VerticalAlignment="Top" Width="100" Canvas.Left="354" Canvas.Top="24"/>
-                <TextBlock FontSize="15" x:Name="txtLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx N" VerticalAlignment="Top" Width="100" Canvas.Left="354" Canvas.Top="6"/>
-                <TextBlock FontSize="15" x:Name="labelGpsStatus" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="GPS STATUS" VerticalAlignment="Top" Width="90" Canvas.Left="181" Canvas.Top="7"/>
-                <Ellipse x:Name="GpsStatus" Fill="Red" Height="20" Width="20" Canvas.Top="8" Canvas.Left="280" />
-                <TextBlock FontSize="15" x:Name="labelGpsNumSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="NUM SAT: " VerticalAlignment="Top" Width="70" Canvas.Left="180" Canvas.Top="31"/>
-                <TextBlock FontSize="15" x:Name="txtNumberOfSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="00" VerticalAlignment="Top" Width="30" Canvas.Left="280" Canvas.Top="31"/>
+                <TextBlock FontSize="15" x:Name="labelLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LAT: " VerticalAlignment="Top" Width="40" Canvas.Left="287" Canvas.Top="6"/>
+                <TextBlock FontSize="15" x:Name="labelLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="LON: " VerticalAlignment="Top" Width="40" Canvas.Left="287" Canvas.Top="24"/>
+                <TextBlock FontSize="15" x:Name="txtLongitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx E" VerticalAlignment="Top" Width="100" Canvas.Left="326" Canvas.Top="24"/>
+                <TextBlock FontSize="15" x:Name="txtLatitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xxx N" VerticalAlignment="Top" Width="100" Canvas.Left="326" Canvas.Top="6"/>
+                <TextBlock FontSize="15" x:Name="labelGpsStatus" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="GPS STATUS" VerticalAlignment="Top" Width="90" Canvas.Left="159" Canvas.Top="7"/>
+                <Ellipse x:Name="GpsStatus" Fill="Red" Height="20" Width="20" Canvas.Top="8" Canvas.Left="250" />
+                <TextBlock FontSize="15" x:Name="labelGpsNumSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="NUM SAT: " VerticalAlignment="Top" Width="70" Canvas.Left="158" Canvas.Top="31"/>
+                <TextBlock FontSize="15" x:Name="txtNumberOfSat" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="00" VerticalAlignment="Top" Width="26" Canvas.Left="252" Canvas.Top="31"/>
                 <!--<<TextBlock FontSize="15" x:Name="labelAccurancy" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="ACCURACY: " VerticalAlignment="Top" Width="80" Canvas.Left="351" Canvas.Top="143"/>
                 <TextBl>ock FontSize="15" x:Name="txtAccurancy" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0.00 " VerticalAlignment="Top" Width="40" Canvas.Left="447" Canvas.Top="143"/>-->
-                <TextBlock FontSize="15" x:Name="labelAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="ALT: " VerticalAlignment="Top" Width="40" Canvas.Left="315" Canvas.Top="40"/>
-                <TextBlock FontSize="15" x:Name="txtAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0 m" VerticalAlignment="Top" Width="100" Canvas.Left="354" Canvas.Top="40"/>
+                <TextBlock FontSize="15" x:Name="labelAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="ALT: " VerticalAlignment="Top" Width="40" Canvas.Left="287" Canvas.Top="40"/>
+                <TextBlock FontSize="15" x:Name="txtAltitude" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0 m" VerticalAlignment="Top" Width="100" Canvas.Left="326" Canvas.Top="40"/>
                 <controls:Gauge x:Name="myPitch" Minimum="0" Maximum="90" Value="0"   Unit="Pitch" 
                          NeedleBrush="#FFF5BD20"
                                               ScaleBrush="#FF0597E9"
@@ -164,23 +162,25 @@
                                 CanDrag="True"
                                 Height="66" 
                                 Width="66" 
-                                Canvas.Left="32" Canvas.Top="226"/>
-                <TextBlock FontSize="15" x:Name="labelTime" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="TIME " VerticalAlignment="Top" Width="140" Canvas.Left="315" Canvas.Top="60"/>
+                                Canvas.Left="36" Canvas.Top="226"/>
+                <TextBlock FontSize="15" x:Name="labelTime" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="TIME " VerticalAlignment="Top" Width="140" Canvas.Left="287" Canvas.Top="60"/>
                 <TextBlock FontSize="12" x:Name="labelXg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="Gx: " VerticalAlignment="Top" Width="24" Canvas.Left="186" Canvas.Top="233"/>
                 <TextBlock FontSize="12" x:Name="labelYg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="Gy: " VerticalAlignment="Top" Width="24" Canvas.Left="186" Canvas.Top="249"/>
                 <TextBlock FontSize="12" x:Name="labelZg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="Gz: " VerticalAlignment="Top" Width="24" Canvas.Left="186" Canvas.Top="267"/>
                 <TextBlock FontSize="12" x:Name="txtXg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="xx" VerticalAlignment="Top" Width="60" Canvas.Left="218" Canvas.Top="233"/>
                 <TextBlock FontSize="12" x:Name="txtYg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="xx" VerticalAlignment="Top" Width="60" Canvas.Left="218" Canvas.Top="249"/>
                 <TextBlock FontSize="12" x:Name="txtZg" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="xx" VerticalAlignment="Top" Width="60" Canvas.Left="218" Canvas.Top="267"/>
-                <TextBlock  FontSize="26.667" x:Name="txtDistance" HorizontalAlignment="Left" Height="35" TextWrapping="NoWrap" Text="24 Km " VerticalAlignment="Top" Width="85" Canvas.Left="183" Canvas.Top="96" FontFamily="Impact"/>
-                <TextBlock  FontSize="20" x:Name="TyreTemp" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="42 °C" VerticalAlignment="Top" Width="69" Canvas.Left="376" Canvas.Top="143"/>
-                <Ellipse x:Name="TempStatus" Fill="GreenYellow" Height="20" Width="20" Canvas.Top="118" Canvas.Left="343" />
-                <TextBlock  FontSize="20" x:Name="txtShockAnt" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="+ 1.5 cm" VerticalAlignment="Top" Width="88" Canvas.Left="374" Canvas.Top="207"/>
-                <TextBlock  FontSize="15" x:Name="labelDistanceText" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="DISTANCE:" VerticalAlignment="Top" Width="85" Canvas.Left="183" Canvas.Top="76"/>
-                <TextBlock  FontSize="20" x:Name="txtExtTemp" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xx °C" VerticalAlignment="Top" Width="69" Canvas.Left="376" Canvas.Top="109"/>
-                <TextBlock  FontSize="20" x:Name="txtShockBack" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="+ 1.5 cm" VerticalAlignment="Top" Width="88" Canvas.Left="374" Canvas.Top="249"/>
-                <TextBlock FontSize="12" x:Name="labelShockAnt" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="Front" VerticalAlignment="Top" Width="40" Canvas.Left="375" Canvas.Top="193"/>
-                <TextBlock FontSize="12" x:Name="labelShockBack" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="Back" VerticalAlignment="Top" Width="40" Canvas.Left="375" Canvas.Top="238"/>
+                <TextBlock  FontSize="26.667" x:Name="txtDistance" HorizontalAlignment="Left" Height="35" TextWrapping="NoWrap" Text="24 Km " VerticalAlignment="Top" Width="85" Canvas.Left="163" Canvas.Top="94" FontFamily="Impact"/>
+                <TextBlock  FontSize="20" x:Name="TyreTemp" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="42 °C" VerticalAlignment="Top" Width="69" Canvas.Left="354" Canvas.Top="145"/>
+                <Ellipse x:Name="TempStatus" Fill="GreenYellow" Height="20" Width="20" Canvas.Top="118" Canvas.Left="321" />
+                <TextBlock  FontSize="20" x:Name="txtShockAnt" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="+ 1.5 cm" VerticalAlignment="Top" Width="88" Canvas.Left="346" Canvas.Top="207"/>
+                <TextBlock  FontSize="15" x:Name="labelDistanceText" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="DISTANCE:" VerticalAlignment="Top" Width="85" Canvas.Left="163" Canvas.Top="74"/>
+                <TextBlock  FontSize="20" x:Name="txtExtTemp" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="xx °C" VerticalAlignment="Top" Width="69" Canvas.Left="354" Canvas.Top="109"/>
+                <TextBlock  FontSize="20" x:Name="txtShockBack" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="+ 1.5 cm" VerticalAlignment="Top" Width="88" Canvas.Left="346" Canvas.Top="249"/>
+                <TextBlock FontSize="12" x:Name="labelShockAnt" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="Front" VerticalAlignment="Top" Width="40" Canvas.Left="347" Canvas.Top="193"/>
+                <TextBlock FontSize="12" x:Name="labelShockBack" HorizontalAlignment="Left" Height="17" TextWrapping="NoWrap" Text="Back" VerticalAlignment="Top" Width="40" Canvas.Left="347" Canvas.Top="238"/>
+                <TextBlock FontSize="10" x:Name="labelShockAnt_Copy" HorizontalAlignment="Left" Height="14" TextWrapping="NoWrap" Text="External" VerticalAlignment="Top" Width="40" Canvas.Left="347" Canvas.Top="101"/>
+                <TextBlock FontSize="10" x:Name="labelShockAnt_Copy1" HorizontalAlignment="Left" Height="14" TextWrapping="NoWrap" Text="Tyre" VerticalAlignment="Top" Width="40" Canvas.Left="347" Canvas.Top="137"/>
 
             </Canvas>
         </StackPanel>
